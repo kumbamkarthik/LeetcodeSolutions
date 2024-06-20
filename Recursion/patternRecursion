@@ -1,0 +1,22 @@
+package Karthik1;
+
+public class patternRecursion {
+	public static void main(String[] args) {
+		k=5;
+		patternRec(5,0);
+	}
+	static int k;
+	static void patternRec(int r,int c) {
+
+		if(r==0) {
+			return;
+		}
+		if(c<r) {
+			System.out.print("*");
+			patternRec(r,c+1);
+		}else {
+			System.out.println();
+			patternRec(r-1 ,0);
+		}
+	}
+}

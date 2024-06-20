@@ -1,0 +1,14 @@
+package Karthik1;
+
+public class FindElementRecursion {
+	public static void main(String[] args) {
+		int arr[] = {32,34,56,43,72,12};
+		System.out.println(findEle(arr,0,34));
+	}
+	static boolean findEle(int arr[],int p,int k) {
+		if(p==arr.length) {
+			return false;
+		}
+		return arr[p]==k || findEle(arr,p+1,k);
+	}
+}

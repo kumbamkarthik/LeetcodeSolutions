@@ -1,0 +1,26 @@
+package Karthik1;
+
+public class permutationRecursion {
+	public static void main(String[] args) {
+		String str = "abc";
+		permutations("",str);
+		phPerm("","23");
+	}
+	static void permutations(String p,String up) {
+		if(up.isEmpty()) {
+			System.out.println(p);
+			return;
+		}
+		char ch = up.charAt(0);
+		for(int i=0;i<=p.length();i++) {
+			String f = p.substring(0,i);
+			String s = p.substring(i,p.length());
+			permutations(f+ch+s,up.substring(1));
+		}
+	}
+	static void phPerm(String str,String str2) {
+		if(str.isEmpty()) {
+			System.out.println();
+		}
+	}
+}

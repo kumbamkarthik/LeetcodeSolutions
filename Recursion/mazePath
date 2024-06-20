@@ -1,0 +1,142 @@
+package Karthik1;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class mazePath { 
+	static ArrayList<String> solList = new ArrayList<>();
+	static ArrayList<String> solListDiagonal = new ArrayList<>();
+	static ArrayList<String> solPerms = new ArrayList<>();
+	static ArrayList<String> solRestrictions = new ArrayList<>();
+	static ArrayList<String> solNoRestrictions = new ArrayList<>();
+	static ArrayList<String> solPath = new ArrayList<>();
+	public static void main(String[] args) {
+		pathMaze("",3,3);
+		System.out.println(solList);
+		permutations("","abc");
+		System.out.println(solPerms);
+		pathMazeDiagonal("",3,3);
+		System.out.println(solListDiagonal);
+		boolean[][] maze = {
+				{true,true,true},
+				{true,true,true},
+				{true,true,true}
+		};
+		pathMazeRestriction("",maze,0,0);
+		System.out.println(solRestrictions);
+		pathMazeNoRestrictions("",maze,0,0);
+		System.out.println(solNoRestrictions);
+		int [][] path = new int[maze.length][maze[0].length];
+		pathMazePrintPath("",maze,path,0,0,1);
+	}
+	static void pathMaze(String p,int r,int c) {
+		if(r==1 && c==1) {
+			solList.add(p);
+			return;
+		}
+		if(r>1) {
+			pathMaze(p+"D",r-1,c);
+		}
+		if(c>1) {
+			pathMaze(p+"R",r,c-1);
+		}
+	}
+	
+	static void pathMazeDiagonal(String p,int r,int c) {
+		if(r==1 && c==1) {
+			solListDiagonal.add(p);
+			return;
+		}
+		if(r>1&&c>1) {
+			pathMazeDiagonal(p+"D",r-1,c-1);
+		}
+		if(r>1) {
+			pathMazeDiagonal(p+"V",r-1,c);
+		}
+		if(c>1) {
+			pathMazeDiagonal(p+"H",r,c-1);
+		}
+	}
+	
+	static void permutations(String p,String up) {
+		if(up.isEmpty()) { 
+			solPerms.add(p);
+			return;
+		}
+		char ch = up.charAt(0);
+		permutations(p+ch,up.substring(1));
+		permutations(p,up.substring(1));
+	}
+	 
+	static void pathMazeRestriction(String p,boolean [][] maze,int r,int c) {
+		if(r==maze.length-1 && c==maze[0].length-1) {
+			solRestrictions.add(p);
+		}
+		if(!maze[r][c]) {
+			return;
+		}
+		if(r<maze.length-1 && c<maze[0].length-1) {
+			pathMazeRestriction(p+"D",maze,r+1,c+1);
+		}
+		if(r<maze.length-1) {
+			pathMazeRestriction(p+"V",maze,r+1,c);
+		}
+		if(c<maze[0].length-1) {
+			pathMazeRestriction(p+"H",maze,r,c+1);
+		}
+	}
+	
+	static void pathMazeNoRestrictions(String p,boolean [][] maze,int r,int c) {
+		if(r==maze.length-1 && c==maze[0].length-1) {
+			solNoRestrictions.add(p);
+			return;
+		}
+		if(!maze[r][c]) {
+			return;
+		}
+		maze[r][c] = false;
+		if(r<maze.length-1) {
+			pathMazeNoRestrictions(p+"D",maze,r+1,c);
+		}
+		if(c<maze[0].length-1) {
+			pathMazeNoRestrictions(p+"R",maze,r,c+1);
+		}
+		if(r>0) {
+			pathMazeNoRestrictions(p+"U", maze, r-1, c);
+		}
+		if(c>0) {
+			pathMazeNoRestrictions(p+"L", maze, r, c-1);
+		}
+		maze[r][c] = true;
+	}
+	
+	static void pathMazePrintPath(String p,boolean [][] maze,int[][] path,int r,int c,int step) {
+		if(r==maze.length-1 && c==maze[0].length-1) {
+			path[r][c] = step;
+			for(int [] arr: path) {
+				System.out.println(Arrays.toString(arr));
+			}
+			System.out.println(p+" ");
+			return;
+		}
+		if(!maze[r][c]) {
+			return;
+		}
+		maze[r][c] = false;
+		path[r][c] = step;
+		if(r<maze.length-1) {
+			pathMazePrintPath(p+"D", maze, path, r+1, c,step+1);
+		}
+		if(c<maze[0].length-1) {
+			pathMazePrintPath(p+"R", maze, path, r, c+1,step+1);
+		}
+		if(r>0) {
+			pathMazePrintPath(p+"U", maze, path, r-1, c,step+1);
+		}
+		if(c>0) {
+			pathMazePrintPath(p+"L", maze, path, r, c-1,step+1);
+		}
+		path[r][c] = 0;
+		maze[r][c] = true;
+	}
+}

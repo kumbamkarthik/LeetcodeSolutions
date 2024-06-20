@@ -1,0 +1,26 @@
+package Karthik1;
+
+public class sumTriangle {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int arr[] = {1,2,3,4,5};
+		sumTri(arr);
+	}
+	
+	static void sumTri(int arr[]) {
+		if(arr.length==0) {
+			return;
+		}
+		int a[] = new int[arr.length-1];
+		for(int i=0;i<arr.length-1;i++) {
+			a[i] = arr[i]+arr[i+1];
+		}
+		sumTri(a);
+		for(int ar: arr) {
+			System.out.print(ar+" ");
+		}
+		System.out.println();
+	}
+
+}

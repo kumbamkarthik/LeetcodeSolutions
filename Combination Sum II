@@ -1,0 +1,29 @@
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> ans = new ArrayList<>();
+        Arrays.sort(candidates);
+		combSum(candidates,0,0,target,new ArrayList<Integer>(),ans);
+		return ans;
+    }
+    private static void combSum(int[] candidates,int x,int s,int target, ArrayList<Integer> path, List<List<Integer>> ans) {
+		// TODO Auto-generated method stub
+		if(x==candidates.length+1) {
+			return;
+		}
+		if(s>target) {
+			return;
+		}
+		if(s==target) {
+		    ans.add(new ArrayList<>(path));
+			return;
+		}
+		for(int i=x;i<candidates.length;++i) {
+            if(i>x && candidates[i]==candidates[i-1]){
+                continue;
+            }
+			path.add(candidates[i]);
+			combSum(candidates,i+1,s+candidates[i],target, path,ans);
+			path.remove(path.size()-1);
+		}
+	}
+}

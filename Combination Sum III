@@ -1,0 +1,24 @@
+class Solution {
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> ans = new ArrayList<>();
+        combSum3(n,k,1,new ArrayList<Integer>(),ans);
+        return ans;
+    }
+    private static void combSum3(int n,int k,int x,List<Integer> path,List<List<Integer>> ans) {
+		int sum = path.stream().mapToInt(Integer::intValue).sum();
+		if(sum>n) {
+			return;
+		}
+		if(sum==n) {
+			path.sort(null);
+			if(path.size()==k) {
+				ans.add(new ArrayList<>(path));
+			}
+		}
+		for(int i=x;i<=9;i++) {
+			path.add(i);
+			combSum3(n,k,i+1,path,ans);
+			path.remove(path.size()-1);
+		}
+	}
+}

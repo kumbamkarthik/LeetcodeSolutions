@@ -1,0 +1,31 @@
+class Solution {
+    public static ArrayList<String> findPath(int[][] m, int n) {
+        // Your code here
+        ArrayList<String> ans = new ArrayList<>();
+        if(m[n-1][n-1]==0){
+            ans.add("-1");
+            return ans;
+        }
+        findRat(m,n,"",0,0,ans);
+        return ans;
+    }
+    static void findRat(int board[][],int n,String str,int row,int col,List<String> ans ) {
+		if(row<0 || row==board.length || col<0 || col==board[0].length) {
+			return;
+		}
+		if(row==board.length-1 && col==board.length-1) {
+			ans.add(str);
+			return;
+		}
+		if(board[row][col]==0) {
+			return;
+		}
+		int cache = board[row][col];
+		board[row][col] = 0;
+		findRat(board,n,str+"D",row+1,col,ans);
+		findRat(board,n,str+'U',row-1,col,ans);
+		findRat(board,n,str+"L",row,col-1,ans);
+		findRat(board,n,str+"R",row,col+1,ans);
+		board[row][col] = cache;
+	}
+}

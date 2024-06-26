@@ -1,0 +1,25 @@
+class Solution{
+	public int perfectSum(int arr[],int n, int sum) 
+	{ 
+	    // Your code goes here
+	    ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+	    Arrays.sort(arr);
+	    pSum(arr,n,0,0,sum,new ArrayList<Integer>(),ans);
+	    return ans.size();
+	} 
+	static void pSum(int[] arr, int n,int s, int target, int sum, ArrayList<Integer> path, ArrayList<ArrayList<Integer>> ans) {
+		// TODO Auto-generated method stub
+		if(target>sum) {
+			return;
+		}
+		if(target==sum) {
+			ans.add(new ArrayList<>(path));
+			return;
+		}
+		for(int i=s;i<n;i++) {
+			path.add(arr[i]);
+			pSum(arr,n,i+1,target+arr[i],sum,path,ans);
+			path.remove(path.size()-1);
+		}
+	}
+}

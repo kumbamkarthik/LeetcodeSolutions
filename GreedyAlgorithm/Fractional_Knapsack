@@ -1,0 +1,34 @@
+class Solution {
+    // Function to get the maximum total value in the knapsack.
+    double fractionalKnapsack(int w, Item arr[], int n) {
+        // Your code here
+        fractionComparator fc = new fractionComparator();
+        Arrays.sort(arr,fc);
+        double ans=0.0;
+        int currentWeight = 0;
+        for(int i=0;i<n;i++){
+            if(currentWeight+arr[i].weight<=w){
+                ans += arr[i].value;
+                currentWeight += arr[i].weight;
+            }else{
+                int rem = w-currentWeight;
+                ans += ((double)arr[i].value/(double)arr[i].weight)*(double)rem;
+                break;
+            }
+        }
+        return ans;
+    }
+    class fractionComparator implements Comparator<Item> {
+        @Override
+        public int compare(Item i1,Item i2){
+            double d1 = (double)i1.value/(double)i1.weight;
+            double d2 = (double)i2.value/(double)i2.weight;
+            if(d1<d2){
+                return 1;
+            }else if(d1>d2){
+                return -1;
+            }
+            return 0;
+        }
+    }
+}

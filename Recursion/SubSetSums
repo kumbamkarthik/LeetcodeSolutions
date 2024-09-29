@@ -1,0 +1,16 @@
+class Solution {
+    ArrayList<Integer> subsetSums(ArrayList<Integer> arr, int n) {
+        // code here
+        ArrayList<Integer> result = new ArrayList<>();
+        subSums(0,0,arr,n,result);
+        return result;
+    }
+    static void subSums(int index,int sum,ArrayList<Integer> arr,int N,ArrayList<Integer> result){
+        if(index==N){
+            result.add(sum);
+            return;
+        }
+        subSums(index+1,sum+arr.get(index),arr,N,result);
+        subSums(index+1,sum,arr,N,result);
+    }
+}

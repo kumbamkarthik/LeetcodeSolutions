@@ -1,0 +1,27 @@
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(candidates);
+        combSums(candidates,0,target,new ArrayList<Integer>(),result);
+        return result;
+    }
+    public static void combSums(int []arr, int s, int target,ArrayList<Integer> path,List<List<Integer>> result){
+        if(target==0){
+            if(!result.contains(path)){
+                result.add(new ArrayList<>(path));
+            }
+            return;
+        }
+        if(target<0){
+            return;
+        }
+        for(int i=s;i<arr.length;i++){
+            if(i>s && arr[i]==arr[i-1]){
+                continue;
+            }
+            path.add(arr[i]); //Backtracking concept
+            combSums(arr,i+1,target-arr[i],path,result);
+            path.remove(path.size()-1);
+        }
+    }
+}
